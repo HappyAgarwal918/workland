@@ -5,6 +5,9 @@ use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\PlanController as AdminPlanController;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 // Frontend public pages
@@ -43,6 +46,9 @@ Route::middleware(['auth', 'role:employer'])->prefix('employer')->name('employer
     Route::get('/travel-guide', [EmployerController::class, 'travelGuide'])->name('travel-guide');
     Route::get('/branches-list', [EmployerController::class, 'branchesList'])->name('branches-list');
     Route::get('/calendar', [EmployerController::class, 'calendar'])->name('calendar');
+    Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription');
+    Route::post('/subscription', [SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
+    Route::post('/subscription/cancel', [SubscriptionController::class, 'cancel'])->name('subscription.cancel');
 });
 
 // Guide dashboard routes
@@ -66,6 +72,12 @@ Route::middleware(['auth', 'role:guide'])->prefix('guide')->name('guide.')->grou
 Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Admin routes
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::resource('plans', AdminPlanController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -38,6 +38,7 @@
     <li><span>Settings</span>
       <ul>
         <li><a href="{{ route('employer.my-profile') }}">Profile</a></li>
+        <li><a href="{{ route('employer.subscription') }}">Subscription</a></li>
       </ul>
     </li>
   </ul>

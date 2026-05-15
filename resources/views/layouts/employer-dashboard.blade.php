@@ -50,6 +50,9 @@
       <a href="{{ route('employer.my-profile') }}" class="sub-item-link @if(request()->routeIs('employer.my-profile')) active @endif">
         <span class="sub-item">My Profile</span>
       </a>
+      <a href="{{ route('employer.subscription') }}" class="sub-item-link @if(request()->routeIs('employer.subscription*')) active @endif">
+        <span class="sub-item">Subscription</span>
+      </a>
     </nav>
     <div class="p-3">
       <form method="POST" action="{{ route('logout') }}">
