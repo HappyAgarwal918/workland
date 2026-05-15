@@ -3,6 +3,7 @@
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\GuideController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +30,11 @@ Route::middleware(['auth', 'role:employer'])->prefix('employer')->name('employer
     Route::get('/booking-guide', [EmployerController::class, 'bookingGuide'])->name('booking-guide');
     Route::get('/guide-detail', [EmployerController::class, 'guideDetail'])->name('guide-detail');
     Route::get('/guide-request', [EmployerController::class, 'guideRequest'])->name('guide-request');
-    Route::get('/message', [EmployerController::class, 'message'])->name('message');
+    Route::get('/message', [MessageController::class, 'index'])->name('message');
+    Route::post('/message/start', [MessageController::class, 'startConversation'])->name('message.start');
+    Route::get('/message/{conversation}', [MessageController::class, 'show'])->name('message.show');
+    Route::post('/message/{conversation}/send', [MessageController::class, 'store'])->name('message.send');
+    Route::get('/message/{conversation}/fetch', [MessageController::class, 'fetch'])->name('message.fetch');
     Route::get('/add-branches', [EmployerController::class, 'addBranches'])->name('add-branches');
     Route::get('/upcoming-booking', [EmployerController::class, 'upcomingBooking'])->name('upcoming-booking');
     Route::get('/outgoing-booking', [EmployerController::class, 'outgoingBooking'])->name('outgoing-booking');
@@ -45,7 +50,10 @@ Route::middleware(['auth', 'role:guide'])->prefix('guide')->name('guide.')->grou
     Route::get('/dashboard', [GuideController::class, 'dashboard'])->name('dashboard');
     Route::get('/manage-request', [GuideController::class, 'manageRequest'])->name('manage-request');
     Route::get('/manage-request-view', [GuideController::class, 'manageRequestView'])->name('manage-request-view');
-    Route::get('/message', [GuideController::class, 'message'])->name('message');
+    Route::get('/message', [MessageController::class, 'index'])->name('message');
+    Route::get('/message/{conversation}', [MessageController::class, 'show'])->name('message.show');
+    Route::post('/message/{conversation}/send', [MessageController::class, 'store'])->name('message.send');
+    Route::get('/message/{conversation}/fetch', [MessageController::class, 'fetch'])->name('message.fetch');
     Route::get('/upcoming-tour-request', [GuideController::class, 'upcomingTourRequest'])->name('upcoming-tour-request');
     Route::get('/outgoing-tour-request', [GuideController::class, 'outgoingTourRequest'])->name('outgoing-tour-request');
     Route::get('/profile', [GuideController::class, 'myProfile'])->name('my-profile');
